@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: User api
+  description: User api
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /user/login:
+    post:
+      summary: User login
+      operationId: userLogin
+      responses:
+        '200': # status code
+          description: User Login Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    required:
+                      - token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  minLength: 1
+                password:
+                  type: string
+                  minLength: 1
+              required:
+                - username
+                - password
+  /user/register:
+    post:
+      summary: User registration
+      operationId: userRegistration
+      responses:
+        '200': # status code
+          description: User Login Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                  username:
+                    type: string
+                    required:
+                      - userId
+                      - username
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  minLength: 6
+                  maxLength: 200
+                password:
+                  type: string
+                  minLength: 8
+                  maxLength: 200
+                  pattern: "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"
+                  description: "The password must be at least 8 characters long, and must contain at least one letter and one number."
+              required:
+                - username
+                - password
